@@ -56,81 +56,45 @@ const getSwapDetails = (swapLog: SwapLog) => {
 }
 
 export default function DetailedPoolCard() {
-  const [currentTime, setCurrentTime] = useState<Date>(new Date())
-  const [isOnline, setIsOnline] = useState(true)
-  const [isFullscreen, setIsFullscreen] = useState(false)
-  const [isSoundEnabled, setIsSoundEnabled] = useState(false)
-  const containerRef = useRef<HTMLDivElement>(null)
-  
-  const upSound = useRef(typeof Audio !== 'undefined' ? new Audio('/sounds/up.mp3') : null)
-  const downSound = useRef(typeof Audio !== 'undefined' ? new Audio('/sounds/down.mp3') : null)
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [displayCount, setDisplayCount] = useState(3);
+  const [isSoundEnabled, setIsSoundEnabled] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const { data: swapLogs, dataUpdatedAt } = useQuery({
+  const { data: allSwapLogs = [] } = useQuery({
     queryKey: ['swap-logs'],
     queryFn: async () => {
       const res = await fetch('https://api.kraxel.io/api/swap-logs')
       const data = await res.json()
-      return data.slice(0, isFullscreen ? 10 : 3) as SwapLog[]
+      return data as SwapLog[]
     },
     refetchInterval: 5000
-  })
+  });
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date())
-    }, 1000)
+    setDisplayCount(isFullscreen ? 8 : 3);
+  }, [isFullscreen]);
 
-    return () => clearInterval(timer)
-  }, [])
-
-  useEffect(() => {
-    if (dataUpdatedAt) {
-      const timeSinceLastUpdate = Date.now() - dataUpdatedAt
-      setIsOnline(timeSinceLastUpdate < 10000)
-    }
-  }, [dataUpdatedAt, currentTime])
-
-  const getTimeAgo = (timestamp: string) => {
-    const seconds = getSecondsDifference(timestamp, currentTime)
-    return formatRelativeTime(seconds)
-  }
+  const displayedSwaps = allSwapLogs.slice(0, displayCount);
 
   const handleFullscreenToggle = () => {
     if (!isFullscreen) {
-      document.body.style.overflow = 'hidden'
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'auto'
+      document.body.style.overflow = '';
     }
-    setIsFullscreen(!isFullscreen)
-  }
+    setIsFullscreen(!isFullscreen);
+  };
+
+  const getTimeAgo = (timestamp: string) => {
+    const currentTime = new Date();
+    const seconds = getSecondsDifference(timestamp, currentTime);
+    return formatRelativeTime(seconds);
+  };
 
   const handleSoundToggle = () => {
-    setIsSoundEnabled(!isSoundEnabled)
-  }
-
-  useEffect(() => {
-    if (isSoundEnabled && swapLogs && swapLogs.length > 0) {
-      const latestSwap = swapLogs[0]
-      const swapType = getSwapDetails(latestSwap).type
-      
-      if (swapType === 'buy') {
-        upSound.current?.play()
-      } else {
-        downSound.current?.play()
-      }
-    }
-  }, [swapLogs, isSoundEnabled])
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (isFullscreen && containerRef.current && !containerRef.current.contains(event.target as Node)) {
-        handleFullscreenToggle()
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [isFullscreen])
+    setIsSoundEnabled(!isSoundEnabled);
+  };
 
   return (
     <>
@@ -140,7 +104,7 @@ export default function DetailedPoolCard() {
       <div 
         ref={containerRef} 
         className={`pixel-border bg-pixel-bg p-4 ${
-          isFullscreen ? 'fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-4xl max-h-[80vh] overflow-auto z-50' : ''
+          isFullscreen ? 'fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-4xl z-50' : ''
         }`}
       >
         <div className="flex flex-col gap-4">
@@ -153,14 +117,13 @@ export default function DetailedPoolCard() {
                 onSoundToggle={handleSoundToggle}
                 isSoundEnabled={isSoundEnabled}
               />
-              <div className={`w-3 h-3 rounded-full ${isOnline ? 'bg-pixel-success' : 'bg-pixel-error'}`} />
             </div>
           </div>
 
           {/* Swap listesi */}
-          {swapLogs ? (
+          {allSwapLogs.length > 0 ? (
             <div className="space-y-3">
-              {swapLogs.map((swap, index) => (
+              {displayedSwaps.map((swap, index) => (
                 <div key={`${swap.timestamp}-${index}`} className="flex justify-between pixel-divider">
                   <div className="flex items-center gap-4">
                     <Image
@@ -168,14 +131,18 @@ export default function DetailedPoolCard() {
                       alt={getExchangeImage(swap.source)?.alt || ''}
                       width={28}
                       height={28}
-                      className="rounded-sm pixelated"
+                      className={`rounded-sm ${
+                        getExchangeImage(swap.source)?.type === 'svg'
+                          ? 'w-7 h-auto'
+                          : 'w-7 h-7'
+                      }`}
                     />
                     <Image 
                       src={`/${getSwapDetails(swap).type}.gif`}
                       alt={getSwapDetails(swap).type}
                       width={28}
                       height={28}
-                      className="rounded-full pixelated"
+                      className="rounded-full w-7 h-7"
                     />
                   </div>
                   <div className="text-right">
@@ -191,7 +158,7 @@ export default function DetailedPoolCard() {
             </div>
           ) : (
             <div className="animate-pulse space-y-4">
-              {[1, 2, 3].map((i) => (
+              {[...Array(displayCount)].map((_, i) => (
                 <div key={i} className="h-16 bg-pixel-primary/10 rounded" />
               ))}
             </div>

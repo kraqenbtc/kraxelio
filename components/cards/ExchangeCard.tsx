@@ -97,7 +97,11 @@ export default function ExchangeCard() {
               alt={`${exchange.name} logo`}
               width={24}
               height={24}
-              className="rounded-sm"
+              className={`rounded-sm ${
+                exchange.imageType === 'svg' 
+                  ? 'w-6 h-auto'
+                  : 'w-6 h-6'
+              }`}
             />
             <h2 className="pixel-heading mb-0">{exchange.name}</h2>
             <div className={`w-3 h-3 rounded-full ml-auto ${
