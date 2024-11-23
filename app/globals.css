@@ -149,9 +149,10 @@ html, body {
 }
 
 .scrollable-content {
-  @apply h-[calc(100vh-4rem)] overflow-y-auto overflow-x-hidden;
+  @apply h-[calc(100vh-5rem)] overflow-y-auto overflow-x-hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 .scrollable-content::-webkit-scrollbar {

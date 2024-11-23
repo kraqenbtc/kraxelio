@@ -71,6 +71,17 @@ export default function DetailedPoolCard() {
     refetchInterval: 5000
   });
 
+  const { data: statusData } = useQuery({
+    queryKey: ['status'],
+    queryFn: async () => {
+      const res = await fetch('https://api.kraxel.io/api/status')
+      return res.json()
+    }
+  })
+
+  // Sistem durumunu kontrol et
+  const isSystemActive = statusData?.services?.pools?.CHARISMA || statusData?.services?.pools?.VELAR
+
   useEffect(() => {
     setDisplayCount(isFullscreen ? 8 : 3);
   }, [isFullscreen]);
@@ -100,14 +111,16 @@ export default function DetailedPoolCard() {
     <>
       {isFullscreen && (
         <div 
-          className="fixed inset-0 bg-pixel-bg/80 backdrop-blur-sm z-40" 
+          className="fixed inset-0 bg-pixel-bg/80 backdrop-blur-sm z-40 overflow-auto" 
           onClick={handleFullscreenToggle}
         />
       )}
       <div 
         ref={containerRef} 
         className={`pixel-border bg-pixel-bg p-2 sm:p-4 ${
-          isFullscreen ? 'fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[90%] max-w-4xl z-50' : ''
+          isFullscreen 
+            ? 'fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[90%] max-w-4xl z-50 max-h-[90vh] overflow-auto' 
+            : 'h-full'
         }`}
       >
         <div className="flex flex-col gap-4">
@@ -120,14 +133,18 @@ export default function DetailedPoolCard() {
                 onSoundToggle={handleSoundToggle}
                 isSoundEnabled={isSoundEnabled}
               />
+              <div className={`w-3 h-3 rounded-full ${isSystemActive ? 'bg-pixel-success' : 'bg-pixel-error'}`} />
             </div>
           </div>
 
           {/* Swap listesi */}
           {allSwapLogs.length > 0 ? (
-            <div className="space-y-3">
+            <div className="space-y-3 px-4">
               {displayedSwaps.map((swap, index) => (
-                <div key={`${swap.timestamp}-${index}`} className="flex justify-between pixel-divider">
+                <div 
+                  key={`${swap.timestamp}-${index}`} 
+                  className="flex justify-between items-center py-3 first:pt-0 border-t first:border-t-0 border-pixel-primary/10"
+                >
                   <div className="flex items-center gap-4">
                     <Image
                       src={`/${swap.source}.${getExchangeImage(swap.source)?.type}`}
@@ -161,7 +178,7 @@ export default function DetailedPoolCard() {
               ))}
             </div>
           ) : (
-            <div className="animate-pulse space-y-4">
+            <div className="animate-pulse space-y-4 px-4">
               {[...Array(displayCount)].map((_, i) => (
                 <div key={i} className="h-16 bg-pixel-primary/10 rounded" />
               ))}

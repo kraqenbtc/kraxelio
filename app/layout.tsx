@@ -12,6 +12,20 @@ const pixelFont = Press_Start_2P({
 export const metadata = {
   title: 'Kraxel - Explore Pixel by Pixel',
   description: 'STX Pixel Screen Analytics',
+  icons: {
+    icon: [
+      {
+        url: '/favicon.ico',
+        sizes: '16x16',
+        type: 'image/x-icon',
+      },
+      {
+        url: '/icon.png',
+        sizes: '32x32',
+        type: 'image/png',
+      },
+    ],
+  },
 }
 
 export default function RootLayout({
@@ -23,11 +37,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={pixelFont.className}>
         <Providers>
-          <Navbar />
-          <div className="pt-20"> {/* Navbar yüksekliği için padding güncellendi */}
-            {children}
+          <div className="flex flex-col min-h-screen">
+            <Navbar />
+            <main className="flex-1 mt-20">
+              {children}
+            </main>
+            <PerformanceMetrics />
           </div>
-          <PerformanceMetrics />
         </Providers>
       </body>
     </html>

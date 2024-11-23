@@ -66,75 +66,93 @@ export default function ExchangeCard() {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="pixel-card flex flex-col animate-pulse">
-            <div className="h-14 px-4">
-              <div className="h-full bg-pixel-primary/10 rounded" />
-            </div>
-            <div className="flex-1 p-4 space-y-4">
-              <div className="h-16 bg-pixel-primary/10 rounded" />
-              <div className="h-16 bg-pixel-primary/10 rounded" />
-            </div>
+      <>
+        <div className="pixel-border bg-pixel-bg p-2 mb-3">
+          <div className="flex items-center gap-2">
+            <h1 className="text-sm sm:text-base text-pixel-primary">Explore</h1>
+            <p className="text-xs text-pixel-secondary">Pixel by Pixel</p>
           </div>
-        ))}
-      </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="pixel-card flex flex-col animate-pulse">
+              <div className="h-14 px-4">
+                <div className="h-full bg-pixel-primary/10 rounded" />
+              </div>
+              <div className="flex-1 p-4 space-y-4">
+                <div className="h-16 bg-pixel-primary/10 rounded" />
+                <div className="h-16 bg-pixel-primary/10 rounded" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </>
     )
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {exchanges.map((exchange) => (
-        <div key={exchange.name} className="pixel-card flex flex-col relative">
-          {'maintenance' in exchange && (
-            <div className="absolute inset-0 bg-pixel-bg/80 flex items-center justify-center z-10">
-              <span className="text-pixel-error font-bold text-lg">MAINTENANCE</span>
-            </div>
-          )}
-          <div className="h-12 flex items-center gap-3 px-4 pixel-border-b">
-            <Image
-              src={`/${exchange.name.toLowerCase()}.${exchange.imageType}`}
-              alt={`${exchange.name} logo`}
-              width={24}
-              height={24}
-              className={`rounded-sm ${
-                exchange.imageType === 'svg' 
-                  ? 'w-6 h-auto'
-                  : 'w-6 h-6'
-              }`}
-            />
-            <h2 className="pixel-heading mb-0">{exchange.name}</h2>
-            <div className={`w-3 h-3 rounded-full ml-auto ${
-              exchange.status === 'active' ? 'bg-pixel-success' : 'bg-pixel-error'
-            }`} />
-          </div>
+    <>
+      <div className="pixel-border bg-pixel-bg p-2 mb-3">
+        <div className="flex items-center gap-2">
+          <h1 className="text-sm sm:text-base text-pixel-primary">Explore</h1>
+          <p className="text-xs text-pixel-secondary">Pixel by Pixel</p>
+        </div>
+      </div>
 
-          <div className="flex-1 p-4 space-y-4">
-            <div>
-              <p className="text-pixel-secondary flex items-center gap-1">
-                TVL <span className="text-pixel-success">$</span>
-              </p>
-              <div className="flex items-baseline gap-2">
-                <p className="pixel-stat">{exchange.metrics.tvl}</p>
-                <div className="flex items-center text-pixel-success">
-                  <ArrowUp weight="bold" />
-                  <span>{exchange.metrics.tvlChange}%</span>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {exchanges.map((exchange) => (
+          <div key={exchange.name} className="pixel-card flex flex-col relative">
+            {'maintenance' in exchange && (
+              <div className="absolute inset-0 bg-pixel-bg/80 flex items-center justify-center z-10">
+                <span className="text-pixel-error font-bold text-lg">MAINTENANCE</span>
+              </div>
+            )}
+            <div className="h-12 flex items-center gap-3 px-4 pixel-border-b">
+              <Image
+                src={`/${exchange.name.toLowerCase()}.${exchange.imageType}`}
+                alt={`${exchange.name} logo`}
+                width={24}
+                height={24}
+                className={`rounded-sm ${
+                  exchange.imageType === 'svg' 
+                    ? 'w-6 h-auto'
+                    : 'w-6 h-6'
+                }`}
+              />
+              <h2 className="pixel-heading mb-0">{exchange.name}</h2>
+              <div className={`w-3 h-3 rounded-full ml-auto ${
+                exchange.status === 'active' ? 'bg-pixel-success' : 'bg-pixel-error'
+              }`} />
+            </div>
+
+            <div className="flex-1 p-4 space-y-4">
+              <div>
+                <p className="text-pixel-secondary flex items-center gap-1">
+                  TVL <span className="text-pixel-success">$</span>
+                </p>
+                <div className="flex items-baseline gap-2">
+                  <p className="pixel-stat">{exchange.metrics.tvl}</p>
+                  <div className="flex items-center text-pixel-success">
+                    <ArrowUp weight="bold" />
+                    <span>{exchange.metrics.tvlChange}%</span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="pixel-divider">
-              <p className="text-pixel-secondary">24h Volume</p>
-              <p className="pixel-stat">{exchange.metrics.volume24h}</p>
-            </div>
+              <div className="pixel-divider">
+                <p className="text-pixel-secondary">24h Volume</p>
+                <p className="pixel-stat">{exchange.metrics.volume24h}</p>
+              </div>
 
-            <div className="pixel-divider">
-              <p className="text-pixel-secondary">Active Pools</p>
-              <p className="pixel-stat">{exchange.metrics.pools}</p>
+              <div className="pixel-divider">
+                <p className="text-pixel-secondary">Active Pools</p>
+                <p className="pixel-stat">{exchange.metrics.pools}</p>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    </>
   )
 }
