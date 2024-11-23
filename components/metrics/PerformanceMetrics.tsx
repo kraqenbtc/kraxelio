@@ -76,7 +76,7 @@ export default function PerformanceMetrics() {
         className="pixel-button flex items-center gap-2 bg-pixel-accent text-pixel-bg"
       >
         <ChartLineUp size={20} weight="bold" />
-        Metrics
+        <span className="hidden sm:inline">Metrics</span>
       </button>
 
       {isOpen && (
