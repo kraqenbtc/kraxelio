@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --pixel-primary: #2B2D42;
+  --pixel-secondary: #8D99AE;
+  --pixel-accent: #EF233C;
+  --pixel-success: #06D6A0;
+  --pixel-error: #E63946;
+  --pixel-bg: #EDF2F4;
+  --pixel-bg-alt: #FFFFFF;
+}
+
+* {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+body {
+  background-color: var(--pixel-bg);
+  color: var(--pixel-primary);
+  background-image: 
+    linear-gradient(var(--pixel-bg-alt) 1px, transparent 1px),
+    linear-gradient(90deg, var(--pixel-bg-alt) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+@layer components {
+  .pixel-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .pixel-border {
+    @apply relative bg-pixel-bg-alt p-4;
+    box-shadow: 
+      -4px 0 0 0 var(--pixel-primary),
+      4px 0 0 0 var(--pixel-primary),
+      0 -4px 0 0 var(--pixel-primary),
+      0 4px 0 0 var(--pixel-primary);
+  }
+
+  .pixel-heading {
+    @apply text-xl font-bold text-pixel-primary;
+    text-shadow: 2px 2px var(--pixel-accent);
+  }
+
+  .pixel-stat {
+    @apply text-2xl font-bold text-pixel-primary;
+    text-shadow: 2px 2px var(--pixel-secondary);
+  }
+
+  .pixel-button {
+    @apply px-4 py-2 relative text-pixel-bg font-bold 
+           transition-all duration-200 bg-pixel-primary
+           hover:translate-y-[2px];
+    box-shadow: 
+      0 4px 0 0 var(--pixel-accent),
+      inset -2px -2px 0 0 rgba(0,0,0,0.2);
+  }
+
+  .pixel-divider {
+    @apply border-t border-pixel-primary/10 pt-4;
+  }
+
+  .pixel-card {
+    @apply pixel-border hover:translate-y-[-2px] transition-all duration-200;
+  }
+
+  .pixel-input-base {
+    @apply bg-pixel-bg-alt w-full px-4 py-2 text-pixel-primary relative;
+    box-shadow: 
+      -2px 0 0 0 var(--pixel-primary),
+      2px 0 0 0 var(--pixel-primary),
+      0 -2px 0 0 var(--pixel-primary),
+      0 2px 0 0 var(--pixel-primary);
+  }
+
+  .pixel-input {
+    @apply pixel-input-base focus:outline-none;
+  }
+
+  .pixel-input:focus {
+    box-shadow: 
+      -2px 0 0 0 var(--pixel-accent),
+      2px 0 0 0 var(--pixel-accent),
+      0 -2px 0 0 var(--pixel-accent),
+      0 2px 0 0 var(--pixel-accent);
+  }
+
+  .pixel-input:disabled {
+    @apply opacity-50 cursor-not-allowed;
+    box-shadow: 
+      -2px 0 0 0 var(--pixel-secondary),
+      2px 0 0 0 var(--pixel-secondary),
+      0 -2px 0 0 var(--pixel-secondary),
+      0 2px 0 0 var(--pixel-secondary);
+  }
+
+  .pixel-select {
+    @apply pixel-input-base appearance-none pr-10;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%232B2D42' stroke-width='2' stroke-linecap='square'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+  }
+
+  .pixel-checkbox {
+    @apply appearance-none w-6 h-6 bg-pixel-bg-alt cursor-pointer relative;
+    box-shadow: 
+      -2px 0 0 0 var(--pixel-primary),
+      2px 0 0 0 var(--pixel-primary),
+      0 -2px 0 0 var(--pixel-primary),
+      0 2px 0 0 var(--pixel-primary);
+  }
+
+  .pixel-checkbox:checked {
+    background-image: url("data:image/svg+xml,%3Csvg width='14' height='10' viewBox='0 0 14 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 5L5 9L13 1' stroke='%232B2D42' stroke-width='2' stroke-linecap='square'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .pixel-label {
+    @apply block text-sm font-bold text-pixel-primary mb-2;
+  }
+
+  .pixel-error {
+    @apply text-xs font-bold text-pixel-error mt-1;
+  }
+}
+
+html, body {
+  @apply h-full overflow-hidden;
+}
+
+.scrollable-content {
+  @apply h-[calc(100vh-4rem)] overflow-y-auto overflow-x-hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--pixel-secondary) var(--pixel-bg);
+}
+
+.scrollable-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollable-content::-webkit-scrollbar-track {
+  background: var(--pixel-bg);
+}
+
+.scrollable-content::-webkit-scrollbar-thumb {
+  background-color: var(--pixel-secondary);
+  border: 2px solid var(--pixel-bg);
+}
+
