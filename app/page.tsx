@@ -4,8 +4,8 @@ import DetailedPoolCard from '@/components/cards/DetailedPoolCard'
 
 export default function Home() {
   return (
-    <main className="h-full bg-pixel-bg">
-      <div className="scrollable-content p-4 sm:p-8">
+    <main className="min-h-screen bg-pixel-bg">
+      <div className="p-4 sm:p-8">
         <div className="max-w-[1024px] mx-auto">
           <div className="pixel-border bg-pixel-bg p-4 mb-8">
             <div className="flex items-center gap-3">

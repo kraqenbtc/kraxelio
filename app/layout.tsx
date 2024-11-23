@@ -10,8 +10,8 @@ const pixelFont = Press_Start_2P({
 })
 
 export const metadata = {
-  title: 'Kraxel - STX DEX Analytics',
-  description: 'STX ağında merkeziyetsiz borsalar için analiz platformu',
+  title: 'Kraxel - Explore Pixel by Pixel',
+  description: 'STX Pixel Screen Analytics',
 }
 
 export default function RootLayout({

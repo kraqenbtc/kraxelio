@@ -31,11 +31,12 @@ export default function PoolOverviewCard() {
 
   return (
     <div className="pixel-border bg-pixel-bg p-4">
-      <h2 className="pixel-heading mb-4">
-        Pool Overview
-      </h2>
+      <div className="h-12 flex items-center gap-3 px-4 pixel-border-b">
+        <h2 className="pixel-heading mb-0">Pool Overview</h2>
+        <div className={`w-3 h-3 rounded-full ml-auto ${stats ? 'bg-pixel-success' : 'bg-pixel-error'}`} />
+      </div>
 
-      <div className="space-y-4">
+      <div className="p-4 space-y-4">
         <div>
           <p className="text-pixel-secondary">Active Pools</p>
           <p className="pixel-stat">{stats?.totalPools || '...'}</p>

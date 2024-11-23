@@ -9,7 +9,10 @@ export default function ExchangeCard() {
   const { data: apiData, isLoading: metricsLoading } = useQuery({
     queryKey: ['metrics'],
     queryFn: async () => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/metrics`)
+      const res = await fetch('https://api.kraxel.io/api/metrics')
+      if (!res.ok) {
+        throw new Error('Network response was not ok')
+      }
       return res.json()
     }
   })

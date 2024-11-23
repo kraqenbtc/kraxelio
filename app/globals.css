@@ -24,6 +24,10 @@ body {
     linear-gradient(var(--pixel-bg-alt) 1px, transparent 1px),
     linear-gradient(90deg, var(--pixel-bg-alt) 1px, transparent 1px);
   background-size: 16px 16px;
+  overflow-x: hidden;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
 }
 
 @layer components {
@@ -65,6 +69,7 @@ body {
 
   .pixel-card {
     @apply pixel-border hover:translate-y-[-2px] transition-all duration-200;
+    min-width: 0;
   }
 
   .pixel-input-base {
@@ -125,6 +130,17 @@ body {
 
   .pixel-error {
     @apply text-xs font-bold text-pixel-error mt-1;
+  }
+
+  .pixel-button-icon {
+    @apply p-1.5 relative text-pixel-primary bg-pixel-bg-alt
+           transition-all duration-200 hover:translate-y-[1px];
+    image-rendering: pixelated;
+    box-shadow: 
+      -1px 0 0 0 var(--pixel-primary),
+      1px 0 0 0 var(--pixel-primary),
+      0 -1px 0 0 var(--pixel-primary),
+      0 1px 0 0 var(--pixel-primary);
   }
 }
 
