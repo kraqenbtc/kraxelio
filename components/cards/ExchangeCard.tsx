@@ -111,7 +111,9 @@ export default function ExchangeCard() {
 
           <div className="flex-1 p-4 space-y-4">
             <div>
-              <p className="text-pixel-secondary">Total Value Locked</p>
+              <p className="text-pixel-secondary flex items-center gap-1">
+                TVL <span className="text-pixel-success">$</span>
+              </p>
               <div className="flex items-baseline gap-2">
                 <p className="pixel-stat">{exchange.metrics.tvl}</p>
                 <div className="flex items-center text-pixel-success">

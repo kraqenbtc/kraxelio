@@ -99,7 +99,10 @@ export default function DetailedPoolCard() {
   return (
     <>
       {isFullscreen && (
-        <div className="fixed inset-0 bg-pixel-bg/80 backdrop-blur-sm z-40" />
+        <div 
+          className="fixed inset-0 bg-pixel-bg/80 backdrop-blur-sm z-40" 
+          onClick={handleFullscreenToggle}
+        />
       )}
       <div 
         ref={containerRef} 
@@ -137,6 +140,7 @@ export default function DetailedPoolCard() {
                           : 'w-7 h-7'
                       }`}
                     />
+                    <div className="w-[1px] h-7 bg-pixel-primary/10"></div>
                     <Image 
                       src={`/${getSwapDetails(swap).type}.gif`}
                       alt={getSwapDetails(swap).type}
