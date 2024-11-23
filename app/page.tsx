@@ -6,12 +6,12 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-pixel-bg">
       <div className="scrollable-content">
-        <div className="p-4 sm:p-8">
+        <div className="p-2 sm:p-4 md:p-8">
           <div className="max-w-[1024px] mx-auto">
             <div className="mb-4">
-              <div className="flex items-center gap-3">
-                <h1 className="text-xl text-pixel-primary">Explore</h1>
-                <p className="text-sm text-pixel-secondary">Pixel by Pixel</p>
+              <div className="flex items-center gap-2 sm:gap-3">
+                <h1 className="text-lg sm:text-xl text-pixel-primary">Explore</h1>
+                <p className="text-xs sm:text-sm text-pixel-secondary">Pixel by Pixel</p>
               </div>
             </div>
             

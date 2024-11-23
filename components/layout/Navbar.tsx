@@ -9,20 +9,20 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 bg-pixel-bg z-50">
       <div className="pixel-container">
         <div className="flex items-center justify-between h-20 border-b border-pixel-primary/20">
-          <Link href="/" className="flex items-center gap-4 group">
+          <Link href="/" className="flex items-center gap-2 sm:gap-4 group">
             <Image
               src="/kraken.png"
               alt="Kraken Logo"
               width={64}
               height={64}
-              className="w-16 h-16 transition-transform group-hover:scale-110"
+              className="w-12 h-12 sm:w-16 sm:h-16 transition-transform group-hover:scale-110"
             />
-            <span className="pixel-heading">KRAXEL</span>
+            <span className="pixel-heading text-base sm:text-xl">KRAXEL</span>
           </Link>
           
           <button className="pixel-button flex items-center gap-2">
             <Wallet size={18} />
-            Connect Wallet
+            <span className="hidden sm:inline">Connect Wallet</span>
           </button>
         </div>
       </div>

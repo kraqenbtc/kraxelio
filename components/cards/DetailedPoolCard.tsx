@@ -106,8 +106,8 @@ export default function DetailedPoolCard() {
       )}
       <div 
         ref={containerRef} 
-        className={`pixel-border bg-pixel-bg p-4 ${
-          isFullscreen ? 'fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-4xl z-50' : ''
+        className={`pixel-border bg-pixel-bg p-2 sm:p-4 ${
+          isFullscreen ? 'fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[90%] max-w-4xl z-50' : ''
         }`}
       >
         <div className="flex flex-col gap-4">

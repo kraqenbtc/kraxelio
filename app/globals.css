@@ -45,12 +45,12 @@ body {
   }
 
   .pixel-heading {
-    @apply text-xl font-bold text-pixel-primary;
+    @apply text-base sm:text-xl font-bold text-pixel-primary;
     text-shadow: 2px 2px var(--pixel-accent);
   }
 
   .pixel-stat {
-    @apply text-2xl font-bold text-pixel-primary;
+    @apply text-lg sm:text-2xl font-bold text-pixel-primary;
     text-shadow: 2px 2px var(--pixel-secondary);
   }
 
