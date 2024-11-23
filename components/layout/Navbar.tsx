@@ -15,7 +15,7 @@ export default function Navbar() {
               alt="Kraken Logo"
               width={64}
               height={64}
-              className="transition-transform group-hover:scale-110"
+              className="w-16 h-16 transition-transform group-hover:scale-110"
             />
             <span className="pixel-heading">KRAXEL</span>
           </Link>

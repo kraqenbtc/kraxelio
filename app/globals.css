@@ -150,20 +150,33 @@ html, body {
 
 .scrollable-content {
   @apply h-[calc(100vh-4rem)] overflow-y-auto overflow-x-hidden;
-  scrollbar-width: thin;
-  scrollbar-color: var(--pixel-secondary) var(--pixel-bg);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .scrollable-content::-webkit-scrollbar {
-  width: 8px;
+  width: 12px;
 }
 
 .scrollable-content::-webkit-scrollbar-track {
-  background: var(--pixel-bg);
+  background: transparent;
+  border-left: 2px solid var(--pixel-primary);
 }
 
 .scrollable-content::-webkit-scrollbar-thumb {
-  background-color: var(--pixel-secondary);
-  border: 2px solid var(--pixel-bg);
+  background-color: var(--pixel-primary);
+  border: 2px solid var(--pixel-primary);
+  image-rendering: pixelated;
+  box-shadow: 
+    inset -2px 0 0 0 var(--pixel-bg),
+    inset 2px 0 0 0 var(--pixel-bg);
+}
+
+.scrollable-content::-webkit-scrollbar-thumb:hover {
+  background-color: var(--pixel-accent);
+}
+
+.scrollable-content::-webkit-scrollbar-button {
+  display: none;
 }
 
