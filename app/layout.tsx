@@ -3,6 +3,7 @@ import './globals.css'
 import { Providers } from './providers'
 import Navbar from '../components/layout/Navbar'
 import PerformanceMetrics from '../components/metrics/PerformanceMetrics'
+import { Analytics } from '@vercel/analytics/react'
 
 const pixelFont = Press_Start_2P({ 
   weight: '400',
@@ -44,6 +45,7 @@ export default function RootLayout({
             </main>
             <PerformanceMetrics />
           </div>
+          <Analytics />
         </Providers>
       </body>
     </html>
