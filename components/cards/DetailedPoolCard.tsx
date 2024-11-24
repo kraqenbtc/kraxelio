@@ -31,7 +31,7 @@ const formatSymbol = (symbol: string) => {
 const getExchangeImage = (source: string) => {
   const imageMap = {
     charisma: { type: 'png', alt: 'Charisma logo' },
-    velar: { type: 'svg', alt: 'Velar logo' }
+    velar: { type: 'png', alt: 'Velar logo' }
   }
   return imageMap[source as keyof typeof imageMap]
 }
@@ -151,11 +151,7 @@ export default function DetailedPoolCard() {
                       alt={getExchangeImage(swap.source)?.alt || ''}
                       width={28}
                       height={28}
-                      className={`rounded-sm ${
-                        getExchangeImage(swap.source)?.type === 'svg'
-                          ? 'w-7 h-auto'
-                          : 'w-7 h-7'
-                      }`}
+                      className="rounded-sm w-7 h-7 bg-pixel-bg"
                     />
                     <div className="w-[1px] h-7 bg-pixel-primary/10"></div>
                     <Image 

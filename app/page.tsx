@@ -10,10 +10,8 @@ export default function Home() {
           <div className="max-w-[1024px] mx-auto">
             <div className="space-y-3">
               <ExchangeCard />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <PoolOverviewCard />
-                <DetailedPoolCard />
-              </div>
+              <PoolOverviewCard />
+              <DetailedPoolCard />
             </div>
           </div>
         </div>

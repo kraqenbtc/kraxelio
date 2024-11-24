@@ -42,7 +42,7 @@ export default function ExchangeCard() {
     {
       name: 'Velar',
       status: statusData?.services?.pools?.VELAR ? 'active' : 'inactive',
-      imageType: 'svg',
+      imageType: 'png',
       metrics: {
         tvl: 'x M',
         tvlChange: '+3.45',
@@ -143,11 +143,6 @@ export default function ExchangeCard() {
               <div className="pixel-divider">
                 <p className="text-pixel-secondary">24h Volume</p>
                 <p className="pixel-stat">{exchange.metrics.volume24h}</p>
-              </div>
-
-              <div className="pixel-divider">
-                <p className="text-pixel-secondary">Active Pools</p>
-                <p className="pixel-stat">{exchange.metrics.pools}</p>
               </div>
             </div>
           </div>
