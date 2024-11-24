@@ -43,9 +43,9 @@ export default function PoolOverviewCard() {
   }
 
   return (
-    <div className="pixel-border bg-pixel-bg p-4">
-      <div className="grid grid-cols-4 gap-4">
-        <div className="flex flex-col justify-center">
+    <div className="pixel-card py-2 px-2">
+      <div className="flex gap-2 items-center">
+        <div className="flex-shrink-0 bg-pixel-bg/80 p-3 rounded-md">
           <p className="text-pixel-secondary mb-2">Active Pools</p>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
@@ -71,7 +71,7 @@ export default function PoolOverviewCard() {
           </div>
         </div>
 
-        <div className="flex flex-col justify-center">
+        <div className="flex-shrink-0 bg-pixel-bg/80 p-3 rounded-md">
           <p className="text-pixel-secondary mb-2">Last Update</p>
           <div className="flex items-center gap-2">
             <Clock className="w-6 h-6 text-pixel-primary" weight="bold" />
@@ -79,7 +79,7 @@ export default function PoolOverviewCard() {
           </div>
         </div>
 
-        <div className="flex flex-col justify-center">
+        <div className="flex-shrink-0 bg-pixel-bg/80 p-3 rounded-md">
           <p className="text-pixel-secondary mb-2">Last Swap</p>
           <div className="flex items-center gap-2">
             <HourglassHigh className="w-6 h-6 text-pixel-primary" weight="bold" />
@@ -87,7 +87,7 @@ export default function PoolOverviewCard() {
           </div>
         </div>
 
-        <div className="flex justify-end items-center pr-4">
+        <div className="ml-auto flex-shrink-0 flex justify-center items-center w-12">
           <div className={`w-3 h-3 rounded-full ${stats ? 'bg-pixel-success' : 'bg-pixel-error'}`} />
         </div>
       </div>

@@ -8,7 +8,7 @@ export default function Home() {
       <div className="scrollable-content">
         <div className="p-2">
           <div className="max-w-[1024px] mx-auto">
-            <div className="space-y-3">
+            <div className="space-y-4">
               <ExchangeCard />
               <PoolOverviewCard />
               <DetailedPoolCard />

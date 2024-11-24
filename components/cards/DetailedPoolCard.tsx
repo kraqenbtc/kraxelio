@@ -57,7 +57,7 @@ const getSwapDetails = (swapLog: SwapLog) => {
 
 export default function DetailedPoolCard() {
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [displayCount, setDisplayCount] = useState(3);
+  const [displayCount, setDisplayCount] = useState(6);
   const [isSoundEnabled, setIsSoundEnabled] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -83,7 +83,7 @@ export default function DetailedPoolCard() {
   const isSystemActive = statusData?.services?.pools?.CHARISMA || statusData?.services?.pools?.VELAR
 
   useEffect(() => {
-    setDisplayCount(isFullscreen ? 8 : 3);
+    setDisplayCount(isFullscreen ? 8 : 6);
   }, [isFullscreen]);
 
   const displayedSwaps = allSwapLogs.slice(0, displayCount);
@@ -107,43 +107,40 @@ export default function DetailedPoolCard() {
     setIsSoundEnabled(!isSoundEnabled);
   };
 
+  // Swapları iki gruba ayıran yardımcı fonksiyon
+  const splitSwaps = (swaps: SwapLog[]) => {
+    const leftSwaps = swaps.slice(0, 3);
+    const rightSwaps = swaps.slice(3, 6);
+    return { leftSwaps, rightSwaps };
+  };
+
   return (
     <>
       {isFullscreen && (
-        <div 
-          className="fixed inset-0 bg-pixel-bg/80 backdrop-blur-sm z-40 overflow-auto" 
-          onClick={handleFullscreenToggle}
-        />
+        <div className="fixed inset-0 bg-pixel-bg/80 backdrop-blur-sm z-40 overflow-auto" onClick={handleFullscreenToggle} />
       )}
-      <div 
-        ref={containerRef} 
-        className={`pixel-border bg-pixel-bg p-2 sm:p-4 ${
-          isFullscreen 
-            ? 'fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[90%] max-w-4xl z-50 max-h-[90vh] overflow-auto' 
-            : 'h-full'
-        }`}
-      >
-        <div className="flex flex-col gap-4">
-          <div className="h-12 flex items-center gap-3 px-4 pixel-border-b">
-            <h2 className="pixel-heading mb-0">Latest Swaps</h2>
-            <div className="flex items-center gap-4 ml-auto">
-              <SwapControls 
-                onFullscreenToggle={handleFullscreenToggle}
-                isFullscreen={isFullscreen}
-                onSoundToggle={handleSoundToggle}
-                isSoundEnabled={isSoundEnabled}
-              />
-              <div className={`w-3 h-3 rounded-full ${isSystemActive ? 'bg-pixel-success' : 'bg-pixel-error'}`} />
-            </div>
+      <div ref={containerRef} className="pixel-card flex flex-col h-full">
+        <div className="h-12 flex items-center gap-3 px-4 pixel-border-b">
+          <h2 className="pixel-heading mb-0">Latest Swaps</h2>
+          <div className="flex items-center gap-4 ml-auto">
+            <SwapControls 
+              onFullscreenToggle={handleFullscreenToggle}
+              isFullscreen={isFullscreen}
+              onSoundToggle={handleSoundToggle}
+              isSoundEnabled={isSoundEnabled}
+            />
+            <div className={`w-3 h-3 rounded-full ${isSystemActive ? 'bg-pixel-success' : 'bg-pixel-error'}`} />
           </div>
+        </div>
 
-          {/* Swap listesi */}
-          {allSwapLogs.length > 0 ? (
-            <div className="space-y-3 px-4">
-              {displayedSwaps.map((swap, index) => (
+        {allSwapLogs.length > 0 ? (
+          <div className="grid grid-cols-2 gap-x-6 p-4 relative">
+            <div className="absolute left-1/2 top-4 bottom-4 w-[1px] bg-pixel-primary/10" />
+            <div className="space-y-2">
+              {splitSwaps(displayedSwaps).leftSwaps.map((swap, index) => (
                 <div 
                   key={`${swap.timestamp}-${index}`} 
-                  className="flex justify-between items-center py-3 first:pt-0 border-t first:border-t-0 border-pixel-primary/10"
+                  className="flex justify-between items-center py-2 border-t first:border-t-0 border-pixel-primary/10"
                 >
                   <div className="flex items-center gap-4">
                     <Image
@@ -160,6 +157,7 @@ export default function DetailedPoolCard() {
                       width={28}
                       height={28}
                       className="rounded-full w-7 h-7"
+                      unoptimized
                     />
                   </div>
                   <div className="text-right">
@@ -173,14 +171,57 @@ export default function DetailedPoolCard() {
                 </div>
               ))}
             </div>
-          ) : (
-            <div className="animate-pulse space-y-4 px-4">
-              {[...Array(displayCount)].map((_, i) => (
-                <div key={i} className="h-16 bg-pixel-primary/10 rounded" />
+
+            <div className="space-y-2">
+              {splitSwaps(displayedSwaps).rightSwaps.map((swap, index) => (
+                <div 
+                  key={`${swap.timestamp}-${index}`} 
+                  className="flex justify-between items-center py-2 border-t first:border-t-0 border-pixel-primary/10"
+                >
+                  <div className="flex items-center gap-4">
+                    <Image
+                      src={`/${swap.source}.${getExchangeImage(swap.source)?.type}`}
+                      alt={getExchangeImage(swap.source)?.alt || ''}
+                      width={28}
+                      height={28}
+                      className="rounded-sm w-7 h-7 bg-pixel-bg"
+                    />
+                    <div className="w-[1px] h-7 bg-pixel-primary/10"></div>
+                    <Image 
+                      src={`/${getSwapDetails(swap).type}.gif`}
+                      alt={getSwapDetails(swap).type}
+                      width={28}
+                      height={28}
+                      className="rounded-full w-7 h-7"
+                      unoptimized
+                    />
+                  </div>
+                  <div className="text-right">
+                    <div className={getSwapDetails(swap).type === 'buy' ? 'text-pixel-success' : 'text-pixel-error'}>
+                      {getSwapDetails(swap).message}
+                    </div>
+                    <div className="text-pixel-secondary text-sm">
+                      {getTimeAgo(swap.timestamp)}
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
-          )}
-        </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-4 p-4">
+            <div className="space-y-3">
+              {[...Array(3)].map((_, i) => (
+                <div key={`left-${i}`} className="h-16 bg-pixel-primary/10 rounded animate-pulse" />
+              ))}
+            </div>
+            <div className="space-y-3">
+              {[...Array(3)].map((_, i) => (
+                <div key={`right-${i}`} className="h-16 bg-pixel-primary/10 rounded animate-pulse" />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </>
   )
